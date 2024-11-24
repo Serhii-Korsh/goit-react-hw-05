@@ -1,0 +1,14 @@
+.form {
+  padding-top: 8px;
+}
+
+.input {
+  width: 300px;
+  border: solid #0d0d0e 2px;
+  transition: border 0.8s;
+}
+
+.input:hover,
+.input:focus {
+  border: solid #0d0de9 2px;
+}

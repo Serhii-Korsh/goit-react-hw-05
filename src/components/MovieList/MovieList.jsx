@@ -1,26 +1,23 @@
 import "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import s from "./MovieList.module.css";
 
-function MovieList({ movies }) {
-  if (movies.length === 0) {
+function MovieList({ movies, isSearchPerformed }) {
+  if (isSearchPerformed && movies.length === 0) {
     return <p>Нет фильмов для отображения.</p>;
   }
 
+  if (movies.length === 0) {
+    return null; // Не отображаем ничего при начальной загрузке
+  }
+
   return (
-    <ul>
+    <ul className={s.ul}>
       {movies.map((movie) => (
-        <li key={movie.id}>
+        <li key={movie.id} className={s.li}>
           <Link to={`/movies/${movie.id}`}>
-            <img
-              src={
-                movie.poster_path
-                  ? `https://image.tmdb.org/t/p/w300${movie.poster_path}`
-                  : "https://via.placeholder.com/300x450?text=No+Image"
-              }
-              alt={movie.title || movie.name}
-            />
-            <p>{movie.title || movie.name}</p>
+            <p className={s.p}>{movie.title || movie.name}</p>
           </Link>
         </li>
       ))}

@@ -1,0 +1,38 @@
+.box {
+  display: flex;
+  border-bottom: solid #d5d6d7 7px;
+  padding-bottom: 5px;
+}
+
+.img {
+  height: 320px;
+  width: auto;
+}
+
+.box2 {
+  padding: 20px;
+}
+
+.ul {
+  list-style-type: disc;
+  list-style-position: outside;
+  padding-left: 40px;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border-bottom: solid #d5d6d7 7px;
+}
+
+.navlink {
+  color: blue;
+}
+
+.navlink:hover,
+.navlink:focus {
+  color: red;
+  text-decoration: underline;
+}

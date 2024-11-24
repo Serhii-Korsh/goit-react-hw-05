@@ -1,0 +1,15 @@
+.ul {
+  list-style-type: disc;
+  list-style-position: outside;
+  padding-left: 40px;
+}
+
+.p {
+  color: #000;
+  transition: text-decoration color 0.8s;
+}
+
+.p:hover,
+.p:focus {
+  color: blue;
+}

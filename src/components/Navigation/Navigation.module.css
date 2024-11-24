@@ -1,0 +1,18 @@
+.nav {
+  padding: 20px;
+  border-bottom: solid #d5d6d7 7px;
+  box-shadow: 10px 0 10px rgb(224, 223, 223);
+  display: flex;
+  gap: 20px;
+}
+
+.navlink {
+  text-decoration: none;
+  transition: text-decoration color 0.8s;
+}
+
+.navlink:hover,
+.navlink:focus {
+  color: red;
+  text-decoration: underline;
+}
