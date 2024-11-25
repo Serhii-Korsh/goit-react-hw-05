@@ -1,29 +1,29 @@
-import { useState, useEffect } from "react";
-import { useParams, Link, Routes, Route, useNavigate } from "react-router-dom";
-import axios from "axios";
-import MovieCast from "/src/components/MovieCast/MovieCast";
-import MovieReviews from "/src/components/MovieReviews/MovieReviews";
+import { useState, useEffect, useRef } from "react";
+import {
+  useParams,
+  Link,
+  useNavigate,
+  useLocation,
+  Outlet,
+} from "react-router-dom";
+// import axios from "axios";
 import s from "./MovieDetailsPage.module.css";
-
-const API_KEY =
-  "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3YmI0OTY1Y2MyY2EyODQ3ZTNiNmFiMTFlZTVlYjY2YyIsIm5iZiI6MTczMjIyMTE1OS45ODg2MjY3LCJzdWIiOiI2NzNmOTE2NGQ3YmVlNTU4NWM1NThmOGQiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.17W3zzallB0GxV9d7bGrFh-p1DIyHMhN_DPtKdTcevk";
-const MOVIE_URL = "https://api.themoviedb.org/3/movie";
+import { getMovieDetails } from "/src/services/api";
 
 function MovieDetailsPage() {
-  const { movieId } = useParams();
+  const { movieId } = useParams(); 
   const [movie, setMovie] = useState(null);
   const navigate = useNavigate();
+  const location = useLocation();
+  const prevLocation = useRef(location.state?.from || "/movies"); 
 
   useEffect(() => {
-    axios
-      .get(`${MOVIE_URL}/${movieId}`, {
-        headers: { Authorization: `Bearer ${API_KEY}` },
-      })
-      .then((response) => setMovie(response.data))
+    getMovieDetails(movieId)
+      .then((data) => setMovie(data))
       .catch((error) => console.error("Error fetching movie details:", error));
   }, [movieId]);
 
-  const goBack = () => navigate(-1);
+  const goBack = () => navigate(prevLocation.current);
 
   if (!movie) return <div>Loading...</div>;
 
@@ -48,26 +48,32 @@ function MovieDetailsPage() {
         </div>
       </div>
       <nav className={s.nav}>
-        <h3>Additional information</h3>
+        <h3>Additional Information</h3>
         <ul className={s.ul}>
           <li>
-            <Link to="cast" className={s.navlink}>
+            <Link
+              to="cast"
+              state={{ from: prevLocation.current }}
+              className={s.navlink}
+            >
               Cast
             </Link>
           </li>
           <li>
-            <Link to="reviews" className={s.navlink}>
+            <Link
+              to="reviews"
+              state={{ from: prevLocation.current }}
+              className={s.navlink}
+            >
               Reviews
             </Link>
           </li>
         </ul>
       </nav>
-      <Routes>
-        <Route path="cast" element={<MovieCast movieId={movieId} />} />
-        <Route path="reviews" element={<MovieReviews movieId={movieId} />} />
-      </Routes>
+      <Outlet /> 
     </div>
   );
 }
 
 export default MovieDetailsPage;
+
